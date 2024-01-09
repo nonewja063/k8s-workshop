@@ -4,7 +4,7 @@ pipeline {
         APP_GIT_URL = "https://github.com/nonewja063/k8s-workshop"
         APP_BRANCH = "main"
         APP_TAG = "latest"
-        APP_NAME = "tono-app"
+        APP_NAME = "nontasan-app"
         APP_PORT = "3000"
         DEV_PROJECT = "dev"
         SQ_SERVER = "https://sq.princhealth.tech"

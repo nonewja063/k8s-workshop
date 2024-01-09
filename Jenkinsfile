@@ -4,18 +4,18 @@ pipeline {
         APP_GIT_URL = "https://github.com/nonewja063/k8s-workshop"
         APP_BRANCH = "main"
         APP_TAG = "latest"
-        APP_NAME = "nontasan-app"
+        APP_NAME = "tono-app"
         APP_PORT = "3000"
         DEV_PROJECT = "dev"
-        SQ_SERVER = "https://sq.gmmo.tech"
-        // ECR_SERVER = "299745677970.dkr.ecr.ap-southeast-1.amazonaws.com"
+        SQ_SERVER = "https://sq.princhealth.tech"
+        // ECR_SERVER = "swr.ap-southeast-2.myhuaweicloud.com/princ"
         ECR_SERVER = "swr.ap-southeast-2.myhuaweicloud.com/princhealth"
         AWS_DEFAULT_REGION = "ap-southeast-1"
-        AWS_DEFAULT_PROFILE = "default"
-        DOMAIN_NAME = "gmmo.tech"
+        AWS_DEFAULT_PROFILE = "princ-nonprod"
+        DOMAIN_NAME = "princhealth.tech"
 
     }
-    
+
     stages {
         stage('Clean') {
             steps {
@@ -121,26 +121,26 @@ pipeline {
                 echo 'Create Ingress'
                 sh '''
                     cat <<EOF | kubectl apply -f -
-                    apiVersion: networking.k8s.io/v1
-                    kind: Ingress
-                    metadata:
-                      name: ${APP_NAME}
-                      namespace: ${DEV_PROJECT}
-                      annotations:
-                        kubernetes.io/ingress.class: nginx
-                    spec:
-                      rules:
-                      - host: ${APP_NAME}-${DEV_PROJECT}.${DOMAIN_NAME}
-                        http:
-                          paths:
-                          - path: /
-                            pathType: Prefix
-                            backend:
-                              service:
-                                name: ${APP_NAME}
-                                port:
-                                  number: 80
-                    EOF
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ${APP_NAME}
+  namespace: ${DEV_PROJECT}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: ${APP_NAME}-${DEV_PROJECT}.${DOMAIN_NAME}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ${APP_NAME}
+            port:
+              number: 80
+EOF
                 '''
 
             }
